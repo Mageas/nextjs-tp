@@ -1,3 +1,4 @@
+import ApplyForm from "@/components/forms/ApplyForm";
 import { createClient } from "@/prismicio";
 import { asText } from "@prismicio/client";
 import Link from "next/link.js";
@@ -29,6 +30,7 @@ export default async function Job({ params }: JobPagePropsType) {
                     </Link>
                 ))}
             </div>
+            <ApplyForm jobSlug={slug} />
         </div>
     );
 }

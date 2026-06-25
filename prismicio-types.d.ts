@@ -141,6 +141,21 @@ interface HomeDocumentData {
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
+/**
+ * Item in *Job → Emails*
+ */
+export interface JobDocumentDataEmailsItem {
+  /**
+   * Email field in *Job → Emails*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: job.emails[].email
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  email: prismic.KeyTextField;
+}
+
 type JobDocumentDataSlicesSlice = never;
 
 /**
@@ -168,6 +183,17 @@ interface JobDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   description: prismic.RichTextField;
+
+  /**
+   * Emails field in *Job*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: job.emails[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  emails: prismic.GroupField<Simplify<JobDocumentDataEmailsItem>>;
 
   /**
    * Slice Zone field in *Job*
@@ -252,6 +278,7 @@ declare module "@prismicio/client" {
       HomeDocumentDataSlicesSlice,
       JobDocument,
       JobDocumentData,
+      JobDocumentDataEmailsItem,
       JobDocumentDataSlicesSlice,
       AllDocumentTypes,
     };

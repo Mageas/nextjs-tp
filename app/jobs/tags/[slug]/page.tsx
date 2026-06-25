@@ -1,5 +1,6 @@
 import JobCard from "@/components/ui/JobCard";
 import { createClient } from "@/prismicio";
+import { JobDocument } from "@/prismicio-types.js";
 import { asText } from "@prismicio/client";
 import Link from "next/link.js";
 import { redirect } from "next/navigation";
@@ -13,7 +14,7 @@ export default async function WebsitePage({ params }: TagPagePropsType) {
     const { slug } = await params;
 
     const client = createClient();
-    const jobs = await client.getAllByTag(slug).catch(() => null);
+    const jobs = await client.getAllByTag(slug).catch(() => null) as JobDocument[];
 
     if (!jobs || jobs.length === 0) redirect("/jobs");
 
