@@ -1,4 +1,5 @@
 import ListJobs from "@/components/layouts/ListJobs";
+import ClickableTag from "@/components/ui/ClickableTag";
 import { createClient } from "@/prismicio";
 
 export default async function Jobs() {
@@ -10,9 +11,7 @@ export default async function Jobs() {
       <h1 className="text-2xl font-bold mb-4">Offres d&apos;emploi</h1>
       <div>
         {tags.map((tag) => (
-          <span key={tag} className="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
-            {tag}
-          </span>
+          <ClickableTag key={tag} name={tag} url={`/jobs/tags/${tag}`} />
         ))}
       </div>
       <ListJobs />

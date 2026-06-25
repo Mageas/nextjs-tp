@@ -1,3 +1,5 @@
+import ClickableTag from "./ClickableTag";
+
 export type JobCardProps = {
   title: string;
   bookmarked: boolean;
@@ -17,10 +19,8 @@ export default function JobCard({ title, bookmarked, datePosted, technologies, d
       </h2>
       <p className="text-gray-600 dark:text-gray-300">{datePosted}</p>
       <div className="flex flex-wrap gap-2 mt-2">
-        {technologies.map((tech, index) => (
-          <span key={index} className="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
-            {tech}
-          </span>
+        {technologies.map((tech) => (
+          <ClickableTag key={tech} name={tech} url={`/jobs/tags/${tech}`} />
         ))}
       </div>
       <p className="text-gray-600 dark:text-gray-300">{description}</p>
