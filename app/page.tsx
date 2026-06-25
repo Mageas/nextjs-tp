@@ -14,7 +14,7 @@ export default async function Home() {
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           {home.data.title}
         </h1>
-        <ListJobs />
+        <ListJobs limit={6} />
     </div>
   );
 }
