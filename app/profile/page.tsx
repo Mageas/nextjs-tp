@@ -19,7 +19,7 @@ export default function Profile() {
       setJobs([]);
       return;
     }
-    fetchPrismaticJobs(0, pins).then(setJobs);
+    fetchPrismaticJobs(1, pins.length, pins).then((res) => setJobs(res.jobs));
   }, [pins]);
   return (
     <>

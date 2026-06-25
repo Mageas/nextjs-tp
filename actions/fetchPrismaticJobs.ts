@@ -3,25 +3,38 @@
 import { createClient } from "@/prismicio";
 import { JobDocument } from "@/prismicio-types.js";
 
-export async function fetchPrismaticJobs(limit: number = 0, ids: string[] = []) {
+export type PaginatedJobs = {
+    jobs: JobDocument[];
+    page: number;
+    totalPages: number;
+    totalResults: number;
+};
+
+export async function fetchPrismaticJobs(page: number = 1, pageSize: number = 6, ids: string[] = []): Promise<PaginatedJobs> {
     const client = createClient();
-    let jobs: JobDocument[] = [];
 
     if (ids.length > 0) {
-        jobs = await client.getAllByUIDs("job", ids);
-    } else {
-        jobs = await client.getAllByType("job");
+        const jobs = await client.getAllByUIDs("job", ids);
+        jobs.sort(
+            (a, b) =>
+                new Date(b.last_publication_date ?? 0).getTime() -
+                new Date(a.last_publication_date ?? 0).getTime()
+        );
+        return { jobs, page: 1, totalPages: 1, totalResults: jobs.length };
     }
 
-    jobs.sort((a, b) => {
-        const dateA = new Date(a.last_publication_date ?? 0);
-        const dateB = new Date(b.last_publication_date ?? 0);
-        return dateB.getTime() - dateA.getTime();
+    const response = await client.getByType("job", {
+        page,
+        pageSize,
+        orderings: [
+            { field: "document.last_publication_date", direction: "desc" },
+        ],
     });
 
-    if (limit > 0) {
-        jobs.splice(limit);
-    }
-
-    return jobs;
+    return {
+        jobs: response.results,
+        page: response.page,
+        totalPages: response.total_pages,
+        totalResults: response.total_results_size,
+    };
 }

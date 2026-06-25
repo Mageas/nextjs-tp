@@ -1,7 +1,7 @@
 import { fetchPrismaticJobs } from "@/actions/fetchPrismaticJobs";
 
 export async function GET(request: Request) {
-    const fetchedJobs = await fetchPrismaticJobs(3);
+    const { jobs: fetchedJobs } = await fetchPrismaticJobs(1, 3);
 
     const jobs = fetchedJobs.map((job) => ({
         uid: job.uid,
