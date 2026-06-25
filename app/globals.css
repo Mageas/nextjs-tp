@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Thème blanc forcé : on rend les variantes `dark:` dépendantes d'une classe
+   `.dark` (jamais présente) au lieu du réglage de l'OS, donc le mode sombre
+   du système ne s'active jamais. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -10,13 +15,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

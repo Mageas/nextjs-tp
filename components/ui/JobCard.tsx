@@ -8,7 +8,7 @@ export default function JobCard({ job }: { job: JobDocument }) {
   return (
       <div className="flex flex-col justify-center w-full h-full p-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-white flex justify-between items-center w-full">
-        <Link href={`/jobs/${job.data?.titre?.toLowerCase().replace(/\s+/g, "-")}`} className="hover:underline">
+        <Link href={`/jobs/${job.uid?.toLowerCase().replace(/\s+/g, "-")}`} className="hover:underline">
             {job.data?.titre ?? ""}
         </Link>
         <Pin job={job} />

@@ -22,16 +22,20 @@ export default function Profile() {
     fetchPrismaticJobs(0, pins).then(setJobs);
   }, [pins]);
   return (
+    <>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
       {jobs.map((job) => (
         <JobCard key={job.id} job={job} />
       ))}
-      <br />
-      <div>
-        <h1>Historique des offres</h1>
+    </div>
+    <div className="mt-8">
+      <div className="my-4">
+        <h1 className="text-2xl font-bold">Historique des offres</h1>
         <Button onClick={() => resetHistory()} >
           Réinitialiser l&apos;historique
         </Button>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
         {history.length === 0 ? (
           <p>Aucune offre dans l&apos;historique.</p>
         ) : (
@@ -41,5 +45,6 @@ export default function Profile() {
         )}
       </div>
     </div>
+    </>
   );
 }
