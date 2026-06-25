@@ -1,6 +1,6 @@
 import ApplyForm from "@/components/forms/ApplyForm";
+import RichText from "@/components/ui/RichText";
 import { createClient } from "@/prismicio";
-import { asText } from "@prismicio/client";
 import Link from "next/link.js";
 import { redirect } from "next/navigation";
 
@@ -22,7 +22,7 @@ export default async function Job({ params }: JobPagePropsType) {
                 &larr; Retour aux offres d&apos;emploi
             </Link>
             <h1 className="text-2xl font-bold mb-4">{job.data?.titre}</h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">{asText(job.data?.description)}</p>
+            <RichText field={job.data?.description} />
             <div className="flex flex-wrap gap-2">
                 {job.tags.map((tag) => (
                     <Link key={tag} href={`/jobs/tags/${tag}`} className="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
