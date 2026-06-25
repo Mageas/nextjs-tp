@@ -228,7 +228,7 @@ export interface JobDocumentDataEmailsItem {
   email: prismic.KeyTextField;
 }
 
-type JobDocumentDataSlicesSlice = never;
+type JobDocumentDataSlicesSlice = JobSectionSlice;
 
 /**
  * Content for Job documents
@@ -324,6 +324,61 @@ export type JobDocument<Lang extends string = string> =
 
 export type AllDocumentTypes = CguDocument | HomeDocument | JobDocument;
 
+/**
+ * Primary content in *JobSection → Default → Primary*
+ */
+export interface JobSectionSliceDefaultPrimary {
+  /**
+   * Title field in *JobSection → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: job_section.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *JobSection → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: job_section.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField;
+}
+
+/**
+ * Default variation for JobSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type JobSectionSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<JobSectionSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *JobSection*
+ */
+type JobSectionSliceVariation = JobSectionSliceDefault;
+
+/**
+ * JobSection Shared Slice
+ *
+ * - **API ID**: `job_section`
+ * - **Description**: JobSection
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type JobSectionSlice = prismic.SharedSlice<
+  "job_section",
+  JobSectionSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -356,6 +411,10 @@ declare module "@prismicio/client" {
       JobDocumentDataEmailsItem,
       JobDocumentDataSlicesSlice,
       AllDocumentTypes,
+      JobSectionSlice,
+      JobSectionSliceDefaultPrimary,
+      JobSectionSliceVariation,
+      JobSectionSliceDefault,
     };
   }
 }
