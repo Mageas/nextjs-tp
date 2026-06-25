@@ -69,6 +69,78 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
+type CguDocumentDataSlicesSlice = never;
+
+/**
+ * Content for CGU documents
+ */
+interface CguDocumentData {
+  /**
+   * cgu field in *CGU*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cgu.cgu
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  cgu: prismic.RichTextField;
+
+  /**
+   * Slice Zone field in *CGU*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cgu.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<CguDocumentDataSlicesSlice>; /**
+   * Meta Title field in *CGU*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: cgu.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *CGU*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: cgu.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *CGU*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: cgu.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * CGU document from Prismic
+ *
+ * - **API ID**: `cgu`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CguDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<CguDocumentData>, "cgu", Lang>;
+
 type HomeDocumentDataSlicesSlice = never;
 
 /**
@@ -250,7 +322,7 @@ interface JobDocumentData {
 export type JobDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<JobDocumentData>, "job", Lang>;
 
-export type AllDocumentTypes = HomeDocument | JobDocument;
+export type AllDocumentTypes = CguDocument | HomeDocument | JobDocument;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -273,6 +345,9 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      CguDocument,
+      CguDocumentData,
+      CguDocumentDataSlicesSlice,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
