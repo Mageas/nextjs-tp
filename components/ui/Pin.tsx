@@ -1,14 +1,23 @@
 "use client";
 import { JobDocument } from "@/prismicio-types.js";
 import { usePinState } from "@/store/pins";
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useEffect, useState } from "react";
 
 export default function Pin({ job }: { job: JobDocument }) {
-    const addPin = usePinState((state) => state.addPin);
-    const removePin = usePinState((state) => state.removePin);
-    const hasPin = usePinState((state) => state.hasPin(job));
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true)
+  }, []);
+
+  const addPin = usePinState((state) => state.addPin);
+  const removePin = usePinState((state) => state.removePin);
+  const pinned = usePinState((state) => state.hasPin(job));
 
   const handlePinClick = () => {
-    if (hasPin) {
+    if (pinned) {
       removePin(job);
     } else {
       addPin(job);
@@ -16,13 +25,10 @@ export default function Pin({ job }: { job: JobDocument }) {
   };
 
   return (
-    <button
-      onClick={handlePinClick}
-      className={`px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-        hasPin ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-blue-500 text-white hover:bg-blue-600'
-      }`}
-    >
-      {hasPin ? 'Unpin' : 'Pin'}
+    mounted && (
+      <button onClick={handlePinClick}>
+      {pinned ? <BookmarkIcon /> : <BookmarkBorderOutlinedIcon />}
     </button>
+    )
   );
 }

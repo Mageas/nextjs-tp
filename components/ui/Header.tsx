@@ -11,7 +11,9 @@ export default function Header() {
                 <nav>
                     <ul className="flex space-x-4">
                         <li>
-                            <a href="#" className="hover:text-gray-400">Login</a>
+                            <Link href="/profile" className="hover:underline">
+                                Profil
+                            </Link>
                         </li>
                     </ul>
                 </nav>

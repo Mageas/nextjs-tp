@@ -1,10 +1,17 @@
 "use server";
 
 import { createClient } from "@/prismicio";
+import { JobDocument } from "@/prismicio-types.js";
 
-export async function fetchPrismaticJobs(limit: number = 0) {
+export async function fetchPrismaticJobs(limit: number = 0, ids: string[] = []) {
     const client = createClient();
-    const jobs = await client.getAllByType("job");
+    let jobs: JobDocument[] = [];
+
+    if (ids.length > 0) {
+        jobs = await client.getAllByUIDs("job", ids);
+    } else {
+        jobs = await client.getAllByType("job");
+    }
 
     jobs.sort((a, b) => {
         const dateA = new Date(a.last_publication_date ?? 0);

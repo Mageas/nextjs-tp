@@ -15,7 +15,7 @@ export const usePinState = create<PinState>()(
     pins: [],
     addPin: (pin) => set((state) => ({ pins: [...state.pins, pin.uid] })),
     removePin: (pin) => set((state) => ({ pins: state.pins.filter((uid) => uid !== pin.uid) })),
-    hasPin: (pin) => get().pins.includes(pin.uid),
+    hasPin: (pin) => get().pins.some((uid) => uid === pin.uid),
 }),
     {
       name: 'pin-storage',
