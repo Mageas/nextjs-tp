@@ -1,6 +1,5 @@
 import { fetchPrismaticJobs } from "@/actions/fetchPrismaticJobs";
 import JobCard from "../ui/JobCard";
-import { asText } from "@prismicio/client";
 
 export default async function ListJobs({ limit = 0 }: { limit?: number }) {
     const jobs = await fetchPrismaticJobs(limit);
@@ -10,11 +9,7 @@ export default async function ListJobs({ limit = 0 }: { limit?: number }) {
             {jobs.map((job) => (
                 <JobCard
                     key={job.id}
-                    title={job.data?.titre ?? ""}
-                    bookmarked={false}
-                    datePosted={job.last_publication_date ?? ""}
-                    technologies={job.tags}
-                    description={asText(job.data?.description) ?? ""}
+                    job={job}
                 />
             ))}
         </div>

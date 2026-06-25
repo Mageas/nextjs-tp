@@ -1,7 +1,6 @@
 import JobCard from "@/components/ui/JobCard";
 import { createClient } from "@/prismicio";
 import { JobDocument } from "@/prismicio-types.js";
-import { asText } from "@prismicio/client";
 import Link from "next/link.js";
 import { redirect } from "next/navigation";
 
@@ -28,11 +27,7 @@ export default async function WebsitePage({ params }: TagPagePropsType) {
                 {jobs.map((job) => (
                     <JobCard
                         key={job.id}
-                        title={job.data?.titre ?? ""}
-                        bookmarked={false}
-                        datePosted={job.last_publication_date ?? ""}
-                        technologies={job.tags}
-                        description={asText(job.data?.description) ?? ""}
+                        job={job}
                     />
                 ))}
             </div>
