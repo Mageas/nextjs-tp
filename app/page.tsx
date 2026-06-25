@@ -1,4 +1,5 @@
 import ListJobs from "@/components/layouts/ListJobs";
+import ButtonLink from "@/components/ui/ButtonLink";
 import { createClient } from "@/prismicio";
 import Image from "next/image";
 
@@ -15,6 +16,9 @@ export default async function Home() {
           {home.data.title}
         </h1>
         <ListJobs limit={6} />
+        <ButtonLink href="/jobs" className="mt-4">
+          Voir toutes les offres d&apos;emploi
+        </ButtonLink>
     </div>
   );
 }
