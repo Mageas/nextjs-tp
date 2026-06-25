@@ -30,7 +30,7 @@ export default async function Job({ params }: JobPagePropsType) {
                     </Link>
                 ))}
             </div>
-            <ApplyForm jobSlug={slug} />
+            <ApplyForm job={job} />
         </div>
     );
 }

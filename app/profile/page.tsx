@@ -4,10 +4,15 @@ import { fetchPrismaticJobs } from "@/actions/fetchPrismaticJobs";
 import { usePinState } from "@/store/pins";
 import JobCard from "@/components/ui/JobCard";
 import { JobDocument } from "@/prismicio-types.js";
+import { useHistoryState } from "@/store/history";
+import Button from "@/components/ui/Button";
 
 export default function Profile() {
   const pins = usePinState((state) => state.pins);
   const [jobs, setJobs] = useState<JobDocument[]>([]);
+
+  const history = useHistoryState((state) => state.history);
+  const resetHistory = useHistoryState((state) => state.reset);
 
   useEffect(() => {
     if (pins.length === 0) {
@@ -21,6 +26,20 @@ export default function Profile() {
       {jobs.map((job) => (
         <JobCard key={job.id} job={job} />
       ))}
+      <br />
+      <div>
+        <h1>Historique des offres</h1>
+        <Button onClick={() => resetHistory()} >
+          Réinitialiser l&apos;historique
+        </Button>
+        {history.length === 0 ? (
+          <p>Aucune offre dans l&apos;historique.</p>
+        ) : (
+          history.map((job) => (
+            <JobCard key={job.id} job={job} />
+          ))
+        )}
+      </div>
     </div>
   );
 }
